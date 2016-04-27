@@ -1,10 +1,10 @@
-package com.antyzero.smoksmog.wear.layout;
+package com.antyzero.smoksmog.layout;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.wearable.view.FragmentGridPagerAdapter;
-import com.antyzero.smoksmog.wear.StationDataFragment;
-import com.antyzero.smoksmog.wear.StationListActivity;
+import com.antyzero.smoksmog.StationDataFragment;
+import com.antyzero.smoksmog.StationListActivity;
 
 public class GridPageAdapter extends FragmentGridPagerAdapter {
 

@@ -1,4 +1,4 @@
-package com.antyzero.smoksmog.wear;
+package com.antyzero.smoksmog;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.antyzero.smoksmog.wear.R;
 
 import java.util.Random;
 

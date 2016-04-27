@@ -3,9 +3,11 @@ package com.antyzero.smoksmog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
 import android.widget.TextView;
 
+import com.antyzero.smoksmog.layout.GridPageAdapter;
 import com.antyzero.smoksmog.wear.R;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.android.gms.common.ConnectionResult;
@@ -41,6 +43,9 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
     @Inject
     Logger logger;
 
+    @Bind(R.id.pager)
+    GridViewPager gridViewPager;
+
     @Bind(com.antyzero.smoksmog.wear.R.id.text)
     TextView text;
 
@@ -50,7 +55,8 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         stationsListener = new StationsListener(this, this);
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_pager );
+        gridViewPager.setAdapter(new GridPageAdapter(getFragmentManager()));
         SmokSmogWearApplication.get(this).getApplicationComponent().inject(this);
         ((WatchViewStub) findViewById(R.id.watch_view_stub)).setOnLayoutInflatedListener(this);
     }

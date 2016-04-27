@@ -1,4 +1,4 @@
-package com.antyzero.smoksmog.wear.layout;
+package com.antyzero.smoksmog.layout;
 
 import android.content.Context;
 import android.support.wearable.view.WearableListView;

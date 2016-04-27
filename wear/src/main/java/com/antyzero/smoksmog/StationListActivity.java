@@ -1,4 +1,4 @@
-package com.antyzero.smoksmog.wear;
+package com.antyzero.smoksmog;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.antyzero.smoksmog.wear.layout.StationListItemAdapter;
+import com.antyzero.smoksmog.layout.StationListItemAdapter;
+import com.antyzero.smoksmog.wear.R;
 
 public class StationListActivity extends Fragment implements WearableListView.ClickListener {
 
