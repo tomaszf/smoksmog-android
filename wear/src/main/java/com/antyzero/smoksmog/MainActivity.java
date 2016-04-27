@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutInflatedListener,
-        StationsChangedListener {
+public class MainActivity extends RxActivity {
 
     @Inject
     SmokSmog smokSmog;
@@ -46,20 +45,15 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
     @Bind(R.id.pager)
     GridViewPager gridViewPager;
 
-    @Bind(com.antyzero.smoksmog.R.id.text)
-    TextView text;
-
     StationsListener stationsListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pager);
         ButterKnife.bind(this);
-        stationsListener = new StationsListener(this, this);
-        setContentView( R.layout.activity_pager );
         gridViewPager.setAdapter(new GridPageAdapter(getFragmentManager()));
         SmokSmogWearApplication.get(this).getApplicationComponent().inject(this);
-        ((WatchViewStub) findViewById(R.id.watch_view_stub)).setOnLayoutInflatedListener(this);
     }
 
     @Override
@@ -79,13 +73,4 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
         stationsListener.disconnect();
     }
 
-    @Override
-    public void onLayoutInflated(WatchViewStub watchViewStub) {
-        ButterKnife.bind(this, watchViewStub);
-    }
-
-    @Override
-    public void stationsChanged() {
-        text.setText(stationsListener.stations.toString());
-    }
 }
