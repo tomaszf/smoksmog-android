@@ -11,15 +11,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.antyzero.smoksmog.layout.StationListItemAdapter;
 import com.antyzero.smoksmog.wear.R;
+import pl.malopolska.smoksmog.model.Station;
 
-public class StationListActivity extends Fragment implements WearableListView.ClickListener {
+import java.util.Collections;
+
+public class StationListActivity extends Fragment implements WearableListView.ClickListener, StationsChangedListener {
 
     @Bind(R.id.station_list_view)
     WearableListView stationList;
 
-
-
-    private static String[] stations = {"Kurdwanow", "Nowa Huta"};
+    private StationsListener listener;
+    StationListItemAdapter stationListItemAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,8 +29,12 @@ public class StationListActivity extends Fragment implements WearableListView.Cl
         View view = inflater.inflate(R.layout.activity_stations, container,false);
         ButterKnife.bind(this, view);
         stationList.setGreedyTouchMode(true);
-        stationList.setAdapter(new StationListItemAdapter(getActivity(), stations));
+        stationListItemAdapter = new StationListItemAdapter(getActivity(), Collections.emptyList());
+        stationList.setAdapter(stationListItemAdapter);
         stationList.setClickListener(this);
+
+        listener = new StationsListener(this.getActivity(), this);
+
         return view;
     }
 
@@ -44,5 +50,10 @@ public class StationListActivity extends Fragment implements WearableListView.Cl
     @Override
     public void onTopEmptyRegionClick() {
 
+    }
+
+    @Override
+    public void stationsChanged() {
+        stationListItemAdapter.setmDataset(listener.stations);
     }
 }
