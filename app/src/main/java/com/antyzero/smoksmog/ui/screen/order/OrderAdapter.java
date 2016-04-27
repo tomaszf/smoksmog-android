@@ -21,11 +21,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderItemViewHolder> impl
     private final List<Station> stationList;
     private final OnStartDragListener onStartDragListener;
     private final SettingsHelper settingsHelper;
+    private final OrderActivity activity;
 
-    public OrderAdapter( List<Station> stationList, OnStartDragListener onStartDragListener, SettingsHelper settingsHelper ) {
+    public OrderAdapter(OrderActivity activity, List<Station> stationList, OnStartDragListener onStartDragListener, SettingsHelper settingsHelper ) {
         this.stationList = stationList;
         this.onStartDragListener = onStartDragListener;
         this.settingsHelper = settingsHelper;
+        this.activity = activity;
     }
 
     @Override
@@ -70,6 +72,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderItemViewHolder> impl
     public void onItemDismiss( int position ) {
         stationList.remove( position );
         notifyItemRemoved( position );
+        activity.sendStationsToWearable();
         settingsHelper.setStationIdList( convertStationsToIdsList( stationList ) );
     }
 }
