@@ -54,6 +54,7 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         stationsListener = new StationsListener(this, this);
         setContentView( R.layout.activity_pager );
         gridViewPager.setAdapter(new GridPageAdapter(getFragmentManager()));

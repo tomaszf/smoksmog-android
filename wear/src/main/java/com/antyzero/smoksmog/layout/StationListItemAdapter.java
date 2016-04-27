@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.antyzero.smoksmog.wear.R;
+import pl.malopolska.smoksmog.model.Station;
+
+import java.util.List;
 
 public final class StationListItemAdapter extends WearableListView.Adapter {
-    private String[] mDataset;
+    private List<Station> mDataset;
     private final Context mContext;
     private final LayoutInflater mInflater;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StationListItemAdapter(Context context, String[] dataset) {
+    public StationListItemAdapter(Context context, List<Station> dataset) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDataset = dataset;
@@ -23,6 +26,7 @@ public final class StationListItemAdapter extends WearableListView.Adapter {
     // Provide a reference to the type of views you're using
     public static class ItemViewHolder extends WearableListView.ViewHolder {
         private TextView textView;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             // find the text view within the custom item's layout
@@ -49,7 +53,7 @@ public final class StationListItemAdapter extends WearableListView.Adapter {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
         TextView view = itemHolder.textView;
         // replace text contents
-        view.setText(mDataset[position]);
+        view.setText(mDataset.get(position).getName());
         // replace list item's metadata
         holder.itemView.setTag(position);
     }
@@ -58,6 +62,11 @@ public final class StationListItemAdapter extends WearableListView.Adapter {
     // (invoked by the WearableListView's layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
+    }
+
+    public void setmDataset(List<Station> mDataset) {
+        this.mDataset = mDataset;
+        this.notifyDataSetChanged();
     }
 }
