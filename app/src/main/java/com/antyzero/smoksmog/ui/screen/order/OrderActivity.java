@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +43,10 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static pl.malopolska.smoksmog.utils.StationUtils.convertStationsToIdsArray;
 import static pl.malopolska.smoksmog.utils.StationUtils.convertStationsToIdsList;
 
-public class OrderActivity extends BaseDragonActivity implements OnStartDragListener, StationDialogAdapter.StationListener {
+public class OrderActivity extends BaseDragonActivity implements OnStartDragListener, StationDialogAdapter.StationListener,
+        DataApi.DataListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = OrderActivity.class.getSimpleName();
     private static final String EXTRA_DIALOG = "EXTRA_DIALOG";
@@ -55,20 +60,23 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
     @Inject
     ErrorReporter errorReporter;
 
-    @Bind( R.id.recyclerView )
+    @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind( R.id.fab )
+    @Bind(R.id.fab)
     FloatingActionButton floatingActionButton;
 
     private final List<Station> stationList = new ArrayList<>();
     private ItemTouchHelper itemTouchHelper;
 
-    @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_order );
+    private GoogleApiClient googleApiClient;
 
-        if ( getIntent() != null && getIntent().getBooleanExtra( EXTRA_DIALOG, false ) ) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initGoogleApiClient();
+        setContentView(R.layout.activity_order);
+
+        if (getIntent() != null && getIntent().getBooleanExtra(EXTRA_DIALOG, false)) {
             showAddDialog();
         }
 
@@ -84,7 +92,7 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
                 .plus( new ActivityModule( this ) )
                 .inject( this );
 
-        OrderAdapter adapter = new OrderAdapter( stationList, this, settingsHelper );
+        OrderAdapter adapter = new OrderAdapter(this, stationList, this, settingsHelper);
 
         recyclerView.setHasFixedSize( true );
         recyclerView.setAdapter( adapter );
@@ -106,6 +114,7 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
                         stations -> {
                             stationList.clear();
                             stationList.addAll( stations );
+                            sendStationsToWearable();
                             recyclerView.getAdapter().notifyDataSetChanged();
                         },
                         throwable -> {
@@ -171,6 +180,13 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
         context.startActivity( intent );
     }
 
+    private Gson createGson() {
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter( DateTime.class, new DateTimeDeserializer() );
+        Converters.registerLocalDate( gsonBuilder );
+        return gsonBuilder.create();
+    }
+
     @Override
     public void onStation( long stationId ) {
         smokSmog.getApi().station( stationId )
@@ -179,6 +195,7 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
                 .subscribe(
                         station -> {
                             stationList.add( station );
+                            sendStationsToWearable();
                             recyclerView.getAdapter().notifyDataSetChanged();
                             settingsHelper.setStationIdList( convertStationsToIdsList( stationList ) );
                         },
@@ -187,5 +204,51 @@ public class OrderActivity extends BaseDragonActivity implements OnStartDragList
                             errorReporter.report( R.string.error_unable_to_add_station );
                         }
                 );
+    }
+
+
+    private void initGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .useDefaultAccount()
+                .build();
+    }
+
+    void sendStationsToWearable() {
+        try {
+            Gson gson = createGson();
+            String stationsJson = gson.toJson(stationList);
+            PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/stations");
+            putDataMapReq.setUrgent();
+            putDataMapReq.getDataMap().putString("stations", stationsJson);
+            PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
+            putDataReq.setUrgent();
+            Wearable.DataApi.putDataItem(googleApiClient, putDataReq);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        System.out.println("onConnected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        System.out.println("onConnectionSuspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        System.out.println("onConnectionFailed " + connectionResult);
+    }
+
+    @Override
+    public void onDataChanged(DataEventBuffer dataEventBuffer) {
+        System.out.println("onDataChanged " + dataEventBuffer);
     }
 }

@@ -13,11 +13,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.antyzero.smoksmog.wear"
+        applicationId "pl.malopolska.smoksmog"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 194000
+        versionName "1.9.4"
     }
 
     buildTypes {
@@ -50,7 +50,7 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0.2'
 
     // Android wear specific libraries
-    compile 'com.google.android.support:wearable:1.3.0'
+    compile 'com.google.android.support:wearable:1.4.0'
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
 }
 

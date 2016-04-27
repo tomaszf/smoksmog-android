@@ -7,7 +7,7 @@ apply plugin: 'spoon'
 apply plugin: 'com.github.triplet.play'
 
 android {
-    
+
     //noinspection GradleDependency // Keep 23.0.2 for travis
     buildToolsVersion "23.0.2"
     compileSdkVersion 23
@@ -23,39 +23,10 @@ android {
         targetSdkVersion 23
         versionCode 194000
         versionName "1.9.4"
-
-        // For some reason Travis is working only with multi dex
-        if (Boolean.parseBoolean(System.getenv("TRAVIS"))) {
-            multiDexEnabled true
-        }
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    signingConfigs {
-
-        debug {
-            storeFile file('debug.keystore')
-        }
-
-        release {
-            storeFile new File("" + System.getenv("KEYSTORE"))
-            storePassword System.getenv("KEYSTORE_PASSWORD")
-            keyAlias System.getenv("KEY_ALIAS")
-            keyPassword System.getenv("KEY_PASSWORD")
-        }
     }
 
     buildTypes {
-
-        debug {
-            signingConfig signingConfigs.debug
-            applicationIdSuffix ".debug"
-        }
-
         release {
-            if (System.getenv("KEYSTORE") != null) {
-                signingConfig signingConfigs.release
-            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -102,6 +73,10 @@ dependencies {
         transitive = true;
     }
 
+    wearApp project(':wear')
+
+    compile 'org.apache.commons:commons-lang3:3.1'
+    compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'

@@ -1,4 +1,4 @@
-package com.antyzero.smoksmog.wear;
+package com.antyzero.smoksmog;
 
 
 import android.content.Context;
@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import javax.inject.Singleton;
 
+import com.antyzero.smoksmog.wear.BuildConfig;
 import dagger.Module;
 import dagger.Provides;
 import pl.malopolska.smoksmog.SmokSmog;

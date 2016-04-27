@@ -1,7 +1,8 @@
-package com.antyzero.smoksmog.wear;
+package com.antyzero.smoksmog;
 
 import android.app.Application;
 import android.content.Context;
+import com.antyzero.smoksmog.DaggerApplicationComponent;
 
 public class SmokSmogWearApplication extends Application {
 

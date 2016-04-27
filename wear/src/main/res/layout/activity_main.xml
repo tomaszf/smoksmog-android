@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     app:rectLayout="@layout/round_activity_main"
     app:roundLayout="@layout/round_activity_main"
-    tools:context="com.antyzero.smoksmog.wear.MainActivity"
+    tools:context="com.antyzero.smoksmog.MainActivity"
     tools:deviceIds="wear"/>

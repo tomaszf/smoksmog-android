@@ -1,4 +1,4 @@
-package com.antyzero.smoksmog.wear;
+package com.antyzero.smoksmog;
 
 import javax.inject.Singleton;
 
