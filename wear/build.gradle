@@ -62,3 +62,6 @@ retrolambda {
     jvmArgs '-noverify'
     incremental true
 }
+dependencies {
+    compile 'net.bytebuddy:byte-buddy:0.6.14'
+}
