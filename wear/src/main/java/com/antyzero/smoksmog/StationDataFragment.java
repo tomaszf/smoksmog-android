@@ -1,5 +1,6 @@
 package com.antyzero.smoksmog;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.antyzero.smoksmog.R;
+import pl.malopolska.smoksmog.model.Particulate;
 import pl.malopolska.smoksmog.model.Station;
 
 import java.util.Random;
@@ -47,7 +49,17 @@ public class StationDataFragment extends Fragment {
             public void run() {
                 Station station = CurrentStation.it;
                 if (station != null) {
-                    stationName.setText(station.getName());
+                    StationDataFragment.this.getActivity().runOnUiThread(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    stationName.setText(station.getName());
+                                    Particulate pollutant = station.getParticulates().get(0);
+                                    pollutantName.setText(pollutant.getShortName());
+                                    pollutantValue.setText(String.valueOf(pollutant.getValue()));
+                                }
+                            }
+                    );
                 }
             }
         }, 500L, 100L);
