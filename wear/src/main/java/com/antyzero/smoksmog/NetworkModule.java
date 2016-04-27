@@ -8,7 +8,7 @@ import java.util.Locale;
 
 import javax.inject.Singleton;
 
-import com.antyzero.smoksmog.wear.BuildConfig;
+import com.antyzero.smoksmog.BuildConfig;
 import dagger.Module;
 import dagger.Provides;
 import pl.malopolska.smoksmog.SmokSmog;

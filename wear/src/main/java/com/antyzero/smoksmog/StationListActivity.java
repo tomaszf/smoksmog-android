@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.antyzero.smoksmog.layout.StationListItemAdapter;
-import com.antyzero.smoksmog.wear.R;
+import com.antyzero.smoksmog.R;
 import pl.malopolska.smoksmog.model.Station;
 
 import java.util.Collections;

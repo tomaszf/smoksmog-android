@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.antyzero.smoksmog.wear.R;
+import com.antyzero.smoksmog.R;
 
 import java.util.Random;
 

@@ -8,7 +8,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.widget.TextView;
 
 import com.antyzero.smoksmog.layout.GridPageAdapter;
-import com.antyzero.smoksmog.wear.R;
+import com.antyzero.smoksmog.R;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,7 +46,7 @@ public class MainActivity extends RxActivity implements WatchViewStub.OnLayoutIn
     @Bind(R.id.pager)
     GridViewPager gridViewPager;
 
-    @Bind(com.antyzero.smoksmog.wear.R.id.text)
+    @Bind(com.antyzero.smoksmog.R.id.text)
     TextView text;
 
     StationsListener stationsListener;
