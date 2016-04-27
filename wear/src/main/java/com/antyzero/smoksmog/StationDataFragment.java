@@ -10,8 +10,11 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.antyzero.smoksmog.R;
+import pl.malopolska.smoksmog.model.Station;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StationDataFragment extends Fragment {
 
@@ -26,8 +29,8 @@ public class StationDataFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState ) {
-        View view = inflater.inflate(R.layout.station_data, container,false);
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.station_data, container, false);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +39,19 @@ public class StationDataFragment extends Fragment {
         });
 
         ButterKnife.bind(this, view);
+
+        Timer timer = new Timer("hi");
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Station station = CurrentStation.it;
+                if (station != null) {
+                    stationName.setText(station.getName());
+                }
+            }
+        }, 500L, 100L);
+
         return view;
     }
 

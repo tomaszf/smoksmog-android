@@ -25,13 +25,20 @@ public class StationListActivity extends Fragment implements WearableListView.Cl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState ) {
-        View view = inflater.inflate(R.layout.activity_stations, container,false);
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_stations, container, false);
         ButterKnife.bind(this, view);
         stationList.setGreedyTouchMode(true);
         stationListItemAdapter = new StationListItemAdapter(getActivity(), Collections.emptyList());
         stationList.setAdapter(stationListItemAdapter);
         stationList.setClickListener(this);
+        stationList.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
+            @Override
+            public void onCentralPositionChanged(int i) {
+                Station station = listener.stations.get(i);
+                CurrentStation.it = station;
+            }
+        });
 
         listener = new StationsListener(this.getActivity(), this);
 
@@ -43,8 +50,7 @@ public class StationListActivity extends Fragment implements WearableListView.Cl
     public void onClick(WearableListView.ViewHolder viewHolder) {
         viewHolder.getItemId();
         GridViewPager gridViewPager = (GridViewPager) getActivity().findViewById(R.id.pager);
-        gridViewPager.setCurrentItem(0,0);
-
+        gridViewPager.setCurrentItem(0, 0);
     }
 
     @Override

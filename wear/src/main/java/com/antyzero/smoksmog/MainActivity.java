@@ -56,21 +56,4 @@ public class MainActivity extends RxActivity {
         SmokSmogWearApplication.get(this).getApplicationComponent().inject(this);
     }
 
-    @Override
-    protected void onStop() {
-        stationsListener.disconnect();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        stationsListener.connect();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stationsListener.disconnect();
-    }
-
 }
