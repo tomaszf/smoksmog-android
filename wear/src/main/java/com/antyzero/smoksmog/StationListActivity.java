@@ -36,6 +36,7 @@ public class StationListActivity extends Fragment implements WearableListView.Cl
             @Override
             public void onCentralPositionChanged(int i) {
                 Station station = listener.stations.get(i);
+                CurrentStation.currentPollutant = 0;
                 CurrentStation.it = station;
             }
         });
