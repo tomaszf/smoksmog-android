@@ -9,19 +9,24 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Station Name"
-            android:id="@+id/station_name" android:layout_gravity="bottom|center_horizontal"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Pollutant"
+            android:id="@+id/pollutant_name" android:layout_gravity="center_horizontal"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Pollutant value"
-            android:id="@+id/pollutant_value" android:layout_gravity="center"/>
+            android:id="@+id/pollutant_value" android:layout_gravity="center" android:textAlignment="center"
+            android:textSize="30dp"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Pollutant"
-            android:id="@+id/pollutant_name" android:layout_gravity="center_horizontal"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Station Name"
+            android:id="@+id/station_name" android:layout_gravity="bottom|center_horizontal"
+            android:gravity="bottom"/>
+
 </android.support.wearable.view.BoxInsetLayout>

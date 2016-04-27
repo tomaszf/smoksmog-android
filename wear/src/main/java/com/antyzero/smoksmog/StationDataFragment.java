@@ -3,6 +3,7 @@ package com.antyzero.smoksmog;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,11 +37,18 @@ public class StationDataFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCurrentPollutant(new Random().nextInt());
+                if (CurrentStation.currentPollutant == CurrentStation.it.getParticulates().size() - 1) {
+                    CurrentStation.currentPollutant = 0;
+                } else {
+                    ++CurrentStation.currentPollutant;
+                }
             }
         });
 
         ButterKnife.bind(this, view);
+
+        stationName.setMovementMethod(new ScrollingMovementMethod());
+        stationName.setHorizontallyScrolling(true);
 
         Timer timer = new Timer("hi");
 
@@ -54,9 +62,12 @@ public class StationDataFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     stationName.setText(station.getName());
-                                    Particulate pollutant = station.getParticulates().get(0);
+                                    Particulate pollutant = station.getParticulates().get(CurrentStation.currentPollutant);
                                     pollutantName.setText(pollutant.getShortName());
-                                    pollutantValue.setText(String.valueOf(pollutant.getValue()));
+                                    pollutantValue.setText(pollutant.getValue() + " " + pollutant.getUnit() +
+                                            "\n" +
+                                            Math.round(pollutant.getValue() / pollutant.getNorm() * 100.0)
+                                            + "%");
                                 }
                             }
                     );
@@ -67,9 +78,5 @@ public class StationDataFragment extends Fragment {
         return view;
     }
 
-    public void setCurrentPollutant(int pollutantIndex) {
-        pollutantName.setText("Poll " + pollutantIndex);
-        pollutantName.setText("Value " + pollutantIndex);
-    }
 
 }
