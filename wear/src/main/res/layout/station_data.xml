@@ -27,6 +27,6 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Station Name"
             android:id="@+id/station_name" android:layout_gravity="bottom|center_horizontal"
-            android:gravity="bottom"/>
+            android:gravity="bottom" android:paddingBottom="15dp"/>
 
 </android.support.wearable.view.BoxInsetLayout>

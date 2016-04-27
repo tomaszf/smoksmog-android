@@ -37,10 +37,12 @@ public class StationDataFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CurrentStation.currentPollutant == CurrentStation.it.getParticulates().size() - 1) {
-                    CurrentStation.currentPollutant = 0;
-                } else {
-                    ++CurrentStation.currentPollutant;
+                if (CurrentStation.it != null) {
+                    if (CurrentStation.currentPollutant == CurrentStation.it.getParticulates().size() - 1) {
+                        CurrentStation.currentPollutant = 0;
+                    } else {
+                        ++CurrentStation.currentPollutant;
+                    }
                 }
             }
         });
@@ -61,13 +63,17 @@ public class StationDataFragment extends Fragment {
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                    stationName.setText(station.getName());
-                                    Particulate pollutant = station.getParticulates().get(CurrentStation.currentPollutant);
-                                    pollutantName.setText(pollutant.getShortName());
-                                    pollutantValue.setText(pollutant.getValue() + " " + pollutant.getUnit() +
-                                            "\n" +
-                                            Math.round(pollutant.getValue() / pollutant.getNorm() * 100.0)
-                                            + "%");
+                                    try {
+                                        stationName.setText(station.getName());
+                                        Particulate pollutant = station.getParticulates().get(CurrentStation.currentPollutant);
+                                        pollutantName.setText(pollutant.getShortName());
+                                        pollutantValue.setText(pollutant.getValue() + " " + pollutant.getUnit() +
+                                                "\n" +
+                                                Math.round(pollutant.getValue() / pollutant.getNorm() * 100.0)
+                                                + "%");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                     );
