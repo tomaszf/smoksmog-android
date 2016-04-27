@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.antyzero.smoksmog.wear.R;
+import com.antyzero.smoksmog.R;
 import pl.malopolska.smoksmog.model.Station;
 
 import java.util.List;

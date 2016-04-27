@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.antyzero.smoksmog.wear.R;
+import com.antyzero.smoksmog.R;
 
 public class StationListItemLayout extends LinearLayout
         implements WearableListView.OnCenterProximityListener {
